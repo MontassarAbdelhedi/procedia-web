@@ -1,37 +1,60 @@
-export default function Footer() {
+import { Container } from './Layout'
+
+const footerLinks = {
+  Product: ['Features', 'Pricing', 'Changelog', 'Documentation'],
+  Company: ['About', 'Blog', 'Careers', 'Contact'],
+  Legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
+}
+
+export function Footer() {
   return (
-    <footer className="w-full py-xl bg-surface-container-lowest border-t border-white/5">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg px-lg max-w-7xl mx-auto">
-        <div className="col-span-1 lg:col-span-1">
-          <div className="font-headline-sm text-headline-sm font-bold text-on-surface mb-md">Procedia</div>
-          <p className="font-body-sm text-body-sm text-on-surface-variant">
-            Redefining the boundaries of motion design with procedural logic and node-based efficiency.
-          </p>
+    <footer className="border-t border-[#2a2a28] bg-[#111110]">
+      <Container>
+        <div className="py-12 sm:py-16">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="lg:col-span-2">
+              <a href="#" className="flex items-center gap-2">
+                <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#534AB7]">
+                  <svg
+                    className="h-4 w-4 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-bold text-[#d4d2cc]">Procedia</span>
+              </a>
+              <p className="mt-3 max-w-xs text-xs leading-5 text-[#888780]">
+                Deliver Interfaces Faster and Seamless with AI
+              </p>
+              <p className="mt-3 text-[10px] text-[#5F5E5A]">
+                Copyright 2025. All right reserved
+              </p>
+            </div>
+
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <div key={category}>
+                <h4 className="text-xs font-semibold text-[#d4d2cc]">{category}</h4>
+                <ul className="mt-3 space-y-2">
+                  {links.map((link) => (
+                    <li key={link}>
+                      <a
+                        href="#"
+                        className="text-xs text-[#888780] transition-colors hover:text-[#d4d2cc]"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="space-y-sm">
-          <h4 className="font-label-caps text-label-caps text-primary mb-md">PRODUCT</h4>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Features</a>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Roadmap</a>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Enterprise</a>
-        </div>
-        <div className="space-y-sm">
-          <h4 className="font-label-caps text-label-caps text-primary mb-md">COMMUNITY</h4>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Twitter</a>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Discord</a>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Forum</a>
-        </div>
-        <div className="space-y-sm">
-          <h4 className="font-label-caps text-label-caps text-primary mb-md">LEGAL</h4>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Terms</a>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Privacy</a>
-          <a className="block font-body-sm text-body-sm text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Cookies</a>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-lg mt-xl pt-lg border-t border-white/5">
-        <p className="font-body-sm text-body-sm text-on-surface-variant opacity-80">
-          &copy; 2024 Procedia. Built for the next generation of motion designers.
-        </p>
-      </div>
+      </Container>
     </footer>
-  );
+  )
 }

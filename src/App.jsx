@@ -1,31 +1,46 @@
-import { useState } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import FeaturesBento from './components/FeaturesBento';
-import NodeEditor from './components/NodeEditor';
-import Pricing from './components/Pricing';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
-import Docs from './components/Docs';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {
+  Navbar,
+  Hero,
+  Features,
+  TechStack,
+  PricingCards,
+  FAQ,
+  CTA,
+  Footer,
+} from './components'
+import { NodeCanvas } from './components/NodeCanvas'
+import { PricingPage } from './pages/PricingPage'
+import { DocumentationPage } from './pages/DocumentationPage'
 
-function App() {
-  var [page, setPage] = useState('home');
-
+function HomePage() {
   return (
-    <div className="selection:bg-primary selection:text-on-primary">
-      <Navbar page={page} onNavigate={setPage} />
-      {page === 'docs' ? <Docs onNavigate={setPage} /> : (
-        <>
+    <div className="min-h-screen bg-[#111110]">
+      <NodeCanvas />
+      <div className="relative z-10">
+        <Navbar />
+        <main>
           <Hero />
-          <FeaturesBento />
-          <NodeEditor />
-          <Pricing />
+          <Features />
+          <TechStack />
+          <PricingCards />
+          <FAQ />
           <CTA />
-          <Footer />
-        </>
-      )}
+        </main>
+        <Footer />
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/docs" element={<DocumentationPage />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
