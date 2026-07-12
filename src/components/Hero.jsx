@@ -241,7 +241,7 @@ export function Hero() {
           <motion.h1 initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl font-bold tracking-tight text-[#d4d2cc] sm:text-5xl lg:text-6xl">
             <span className="bg-gradient-to-r from-[#534AB7] via-[#7B72D0] to-[#4cbb6c] bg-clip-text text-transparent">Node-Based</span>{' '}
-            Motion Graphics for After Effects
+            Graph Panel for After Effects
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}

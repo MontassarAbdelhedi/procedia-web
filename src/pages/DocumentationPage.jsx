@@ -476,47 +476,801 @@ export function DocumentationPage() {
                 )}
 
                 {activeTab === 'user-guide' && (
-                  <div className="space-y-8">
+                  <div className='space-y-10'>
                     <div>
-                      <h2 className="text-lg font-semibold text-[#d4d2cc]">The Node Editor</h2>
-                      <p className="mt-2 text-sm leading-7 text-[#888780]">
-                        The node editor is your main workspace. Drag to pan, scroll to zoom, and right-click to open the node menu. Connect nodes by dragging from an output port to an input port.
+                      <p className='text-sm leading-7 text-[#B4B2A9]'>
+                        Procedia is a <strong>visual node-based compositing panel</strong> for Adobe After Effects. It lets you build compositing workflows as a node graph — each node represents an AE layer, effect, or data input, and wires define how data flows between them.
                       </p>
                     </div>
+
+                    {/* Interface Overview */}
                     <div>
-                      <h2 className="text-lg font-semibold text-[#d4d2cc]">Working with Nodes</h2>
-                      <p className="mt-2 text-sm leading-7 text-[#888780]">
-                        Each node represents an operation in your motion graphics pipeline. Nodes process data sequentially from left to right. You can group nodes, create branches, and merge paths to build complex effects.
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Interface Overview</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Procedia's panel is divided into five zones:
                       </p>
-                    </div>
-                    <div>
-                      <h2 className="text-lg font-semibold text-[#d4d2cc]">Preview & Render</h2>
-                      <p className="mt-2 text-sm leading-7 text-[#888780]">
-                        Changes in the node graph update in real-time in your After Effects composition. When you're satisfied, click "Apply" to bake the results into your timeline as standard After Effects layers and keyframes.
-                      </p>
-                    </div>
-                    <div>
-                      <h2 className="text-lg font-semibold text-[#d4d2cc]">Keyboard Shortcuts</h2>
-                      <div className="mt-3 space-y-2">
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
                         {[
-                          { key: 'Space + Drag', action: 'Pan the graph editor' },
-                          { key: 'Scroll', action: 'Zoom in/out' },
-                          { key: 'Ctrl + Z', action: 'Undo' },
-                          { key: 'Ctrl + Shift + Z', action: 'Redo' },
-                          { key: 'Delete', action: 'Remove selected nodes' },
-                          { key: 'Ctrl + D', action: 'Duplicate selected nodes' },
-                        ].map((shortcut) => (
-                          <div key={shortcut.key} className="flex items-center gap-4">
-                            <code className="shrink-0 rounded border border-[#2a2a28] bg-[#161614] px-2 py-0.5 text-[11px] text-[#B4B2A9]">
-                              {shortcut.key}
-                            </code>
-                            <span className="text-xs text-[#888780]">{shortcut.action}</span>
-                          </div>
+                          'Node Palette (left) — searchable list of all node types you can drag onto the canvas.',
+                          'Canvas (center) — the main workspace where you build and edit your node graph.',
+                          'Inspector Panel (right) — edit properties of the selected node.',
+                          'Top Bar — action buttons (save, undo, duplicate, delete, layout, settings, etc.).',
+                          'Bottom Zone — comp list dropdown, floating tips, notifications, minimap.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
                         ))}
+                      </ul>
+                    </div>
+
+                    {/* Canvas Navigation */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Canvas Navigation</h2>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Action</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>How</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { action: 'Pan', how: 'Click and drag on empty canvas space' },
+                              { action: 'Zoom', how: 'Scroll with mouse wheel' },
+                              { action: 'Zoom to fit', how: 'Click Fit View in the top bar, or the fit button on the minimap' },
+                              { action: 'Minimap', how: 'Shows a birds-eye view in the bottom-right corner. Click on it to jump to that area' },
+                            ].map((row) => (
+                              <tr key={row.action} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.action}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.how}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        The canvas has a dot-grid background. Sidebars can be collapsed via thin handles that appear at the left and right edges of the canvas on hover.
+                      </p>
+                    </div>
+
+                    {/* Nodes */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Nodes</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Nodes are the building blocks of your graph. Each node represents an element in After Effects: a layer, an effect, a composition, a footage item, or a data input.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Node Anatomy</h3>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'State dot — green (exists in AE), gray (not yet created), red (error / deleted in AE).',
+                          'Collapse button (chevron) — hides the node body to save space.',
+                          'Input ports (left side) — where wires enter the node.',
+                          'Output ports (right side) — where wires exit the node.',
+                          'Header — shows the node title (double-click to rename).',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Creating Nodes</h3>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Drag from the Node Palette: find a node in the left sidebar and drag it onto the canvas.',
+                          'Wire-to-empty-space: drag a wire connection onto empty canvas — the Node Picker opens, letting you search and place a compatible node.',
+                          'Import AE Project: use the Import button in the top bar to generate nodes from an existing AE project.',
+                          'Duplicate: select a node and press Ctrl+D or click the Duplicate button in the top bar.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Selecting Nodes</h3>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Action</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>How</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { action: 'Single selection', how: 'Click a node' },
+                              { action: 'Add / toggle selection', how: 'Ctrl+Click or Shift+Click' },
+                              { action: 'Rubber-band select', how: 'Click and drag on empty canvas to draw a selection rectangle' },
+                              { action: 'Select all', how: 'Ctrl+A' },
+                            ].map((row) => (
+                              <tr key={row.action} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.action}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.how}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Selected nodes show a purple border highlight.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Moving Nodes</h3>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Drag a node by its header to reposition it.',
+                          'If multiple nodes are selected, dragging moves them all together.',
+                          'With Snap to Grid enabled in Settings, positions snap to a 24px grid.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Renaming Nodes</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Double-click the title in the node header. An inline input field appears. Press Enter to confirm, Escape to cancel.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Deleting Nodes</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Select node(s) and press Delete or Backspace, or click the Delete button in the top bar. Wires connected to the deleted nodes are removed automatically.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Collapsing / Expanding</h3>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Click the chevron in the node header to collapse or expand it individually.',
+                          'Use Collapse All / Expand All in the top bar to toggle all nodes at once.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Node States</h3>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>State</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Appearance</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Meaning</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { state: 'Alive', appearance: 'Solid border, green dot', meaning: 'Layer/effect exists in AE' },
+                              { state: 'Ghost', appearance: 'Dashed border, gray dot, lower opacity', meaning: 'Defined in the graph but not yet created in AE' },
+                              { state: 'Error', appearance: 'Red border, red dot', meaning: 'Layer/effect was deleted outside Procedia' },
+                              { state: 'Disabled', appearance: 'Dashed border, 50% opacity, desaturated', meaning: 'Toggled off (via right-click or inspector)' },
+                            ].map((row) => (
+                              <tr key={row.state} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.state}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.appearance}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.meaning}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Node Color Toolbar</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Hover over a node to reveal a floating toolbar above it with color swatches. Click a color to change the node accent color for visual organization.
+                      </p>
+                    </div>
+
+                    {/* Wires & Connections */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Wires & Connections</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Wires carry data between nodes. There are three types:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Layer wires — pass layer data (main compositing flow).',
+                          'Data wires — pass control values (e.g., a Slider node feeding a parameter).',
+                          'Parent/child wires — establish parent-child layer relationships.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Creating a Wire</h3>
+                      <ol className='mt-2 space-y-1.5 text-sm text-[#B4B2A9] list-decimal pl-5'>
+                        {[
+                          'Click and drag from a node output port (right side, green dot).',
+                          'A preview bezier curve follows your cursor.',
+                          'Drop on another node input port (left side, green or gray dot) to complete the connection.',
+                        ].map((item) => (
+                          <li key={item} className='text-sm text-[#B4B2A9]'>{item}</li>
+                        ))}
+                      </ol>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        <strong>Reverse wiring</strong>: Drag from an input port instead — the Node Picker opens and shows only nodes whose output is compatible.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Wire Insertion</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Drag a node from the palette and drop it onto an existing wire — the node is inserted between the source and target, automatically splitting the wire.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Selecting & Deleting Wires</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Click a wire to select it (highlighted). Press Delete, Backspace, or double-click to remove it.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Wire Styles</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Choose your preferred wire visual style in Settings → Wires:
+                      </p>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Style</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { style: 'Bezier', description: 'Smooth curved lines (default)' },
+                              { style: 'Direct', description: 'Straight lines' },
+                              { style: 'Stepped', description: 'Right-angle stepped lines' },
+                              { style: 'Animated Dash', description: 'Dashed line with a flowing animation effect' },
+                            ].map((row) => (
+                              <tr key={row.style} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.style}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.description}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Validation</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Procedia prevents invalid connections:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Cycle detection — no layer wire loops are allowed.',
+                          'Port type matching — only compatible ports can connect.',
+                          'Matte rules — Track Matte nodes require Foreground and Matte inputs from layers in the same composition.',
+                          'Parenting rules — Parenting require Parent and Child to be hosted in the same composition.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Node Palette */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Node Palette (Left Sidebar)</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        The left sidebar lists all available node types organized by category:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Core — Comp, Footage',
+                          'Data — Number, Angle, Slider, Checkbox, Point Control, Color Control, Layer Index, Text, Timecode',
+                          'Layers — Text, Camera, Light, Null, Adjustment Layer, Solid, Shape (Rectangle, Ellipse, Star, Gear, Flower, Squircle, Wave) and Path',
+                          'Effects — all After Effects effects (Blur & Sharpen, Color Correction, Distort, Generate, etc.)',
+                          'Utilities — Merge, Multimerge',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Use the <strong>search bar</strong> at the top of the palette to filter nodes by name.
+                      </p>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        <strong>To add a node</strong>: drag any item from the palette onto the canvas.
+                      </p>
+                    </div>
+
+                    {/* Inspector Panel */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Inspector Panel (Right Sidebar)</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        When a single node is selected, the Inspector (right sidebar) shows its editable properties.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Properties Section</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Lists all parameters for the node. Parameter types include:
+                      </p>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Type</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Interaction</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { type: 'Number', interaction: 'Text input — supports math expressions (e.g., 600/2 evaluates to 300)' },
+                              { type: 'Boolean', interaction: 'Checkbox toggle' },
+                              { type: 'Color', interaction: 'Opens a color picker popover with swatches and a hex field' },
+                              { type: 'Enum', interaction: 'Dropdown select' },
+                              { type: 'Vector2 / Vector3', interaction: 'Comma-separated text input' },
+                              { type: 'String', interaction: 'Text input' },
+                            ].map((row) => (
+                              <tr key={row.type} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.type}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.interaction}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Parameters that are connected to an upstream data wire appear in <strong>amber</strong> color. Parameters disabled by conditional logic are grayed out.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Keyframe Controls</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Animatable parameters show a keyframe control with:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          '\u25C0 — jump to previous keyframe',
+                          '\u25C6 — add / remove a keyframe at the current playhead position',
+                          '\u25B6 — jump to next keyframe',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Changing a keyframed parameter value when the playhead is not on a keyframe automatically adds one.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Layer Stack (Comp Nodes)</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        When a comp node is selected, the inspector shows an ordered list of its layers. Each row displays the index, layer name, type abbreviation, and state dot.
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Move Up / Move Down buttons reorder layers in AE.',
+                          'Rows are draggable — drag a layer to reorder it within the stack.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Layer Order (Affected Nodes)</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Nodes that represent layers in a comp show Move Up / Move Down buttons to reorder them.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Footage Import (Footage Nodes)</h3>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Shows the imported file name.',
+                          'Click Browse & Import to select or replace footage from your filesystem.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Recovering Error Nodes</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        A node in error state (deleted outside Procedia) shows a Recreate action in the inspector (or via notification).
+                      </p>
+                    </div>
+
+                    {/* Composition List */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Composition List</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        The comp list dropdown is at the bottom-left edge of the canvas.
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'All project (default) — shows every node in the graph.',
+                          'Selecting a specific composition filters the canvas to show only upstream nodes (those relevant to that comp). New nodes added while a comp is active are auto-connected to it.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Graph Search */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Graph Search</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        The search icon is at the top-left corner of the canvas.
+                      </p>
+                      <ol className='mt-2 space-y-1.5 text-sm text-[#B4B2A9] list-decimal pl-5'>
+                        {[
+                          'Click the magnifying glass to open the search field.',
+                          'Start typing — nodes whose labels match are highlighted with a golden border.',
+                          'A counter shows how many matches were found (e.g., 3 found).',
+                          'Click the Focus button (or press Enter) to pan and zoom to the first matching node and select it.',
+                          'Press Escape or close the search to clear highlights.',
+                        ].map((item) => (
+                          <li key={item} className='text-sm text-[#B4B2A9]'>{item}</li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    {/* Top Bar */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Top Bar</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        The top bar runs along the top of the panel and provides quick access to actions:
+                      </p>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Action</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { action: 'Save', description: 'Save the graph to AE / export file' },
+                              { action: 'Open', description: 'Load a saved graph file' },
+                              { action: 'Undo / Redo', description: 'Step backward / forward through graph changes' },
+                              { action: 'Auto Layout', description: 'Arrange all nodes using an automatic layout algorithm' },
+                              { action: 'Fit View', description: 'Zoom and pan to show all nodes' },
+                              { action: 'Collapse All / Expand All', description: 'Toggle collapse state of all nodes' },
+                              { action: 'Import AE Project', description: 'Import an entire AE project as a node graph' },
+                              { action: 'Duplicate', description: 'Duplicate the selected node(s) — dimmed when nothing selected' },
+                              { action: 'Delete', description: 'Delete the selected node(s) — dimmed when nothing selected' },
+                              { action: 'Reset', description: 'Reset the graph' },
+                              { action: 'Reload', description: 'Reload the panel' },
+                              { action: 'Settings', description: 'Open the settings modal' },
+                              { action: 'Bug Report', description: 'Open the bug reporting form' },
+                            ].map((row) => (
+                              <tr key={row.action} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.action}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.description}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* Auto Layout */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Auto Layout</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Click Auto Layout in the top bar to automatically arrange all nodes. The layout uses a layered (Sugiyama-style) algorithm.
+                      </p>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Configure in Settings → Auto Layout:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Direction — Left-to-Right or Top-to-Bottom',
+                          'Horizontal Spacing — 40 to 300 px',
+                          'Vertical Spacing — 20 to 200 px',
+                          'Snap to Grid — snap node positions to a 24px grid',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Locked nodes are skipped during auto layout.
+                      </p>
+                    </div>
+
+                    {/* Settings */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Settings</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Click the gear icon in the top bar to open Settings. The modal has three tabs:
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>General</h3>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Setting</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { setting: 'Minimap', description: 'Show / hide the minimap' },
+                              { setting: 'Port Labels', description: 'Show port labels on node hover' },
+                              { setting: 'Anonymous Reporting', description: 'Enable / disable error reporting' },
+                              { setting: 'Auto Shy', description: 'Automatically shy unselected layers in the AE timeline when a node is selected' },
+                              { setting: 'Replay Tutorial', description: 'Restart the walkthrough tutorial' },
+                            ].map((row) => (
+                              <tr key={row.setting} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.setting}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.description}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Wires</h3>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Setting</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { setting: 'Wire Style', description: 'Bezier (default), Direct, or Stepped' },
+                              { setting: 'Animated Dash', description: 'Enable flowing dashed wire animation' },
+                            ].map((row) => (
+                              <tr key={row.setting} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.setting}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.description}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Auto Layout</h3>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Setting</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { setting: 'Snap to Grid', description: 'Snap node positions to 24px grid while dragging' },
+                              { setting: 'Direction', description: 'Left-to-Right or Top-to-Bottom' },
+                              { setting: 'Horizontal Spacing', description: '40-300 px between nodes' },
+                              { setting: 'Vertical Spacing', description: '20-200 px between nodes' },
+                            ].map((row) => (
+                              <tr key={row.setting} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.setting}</td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.description}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* Keyframes */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Keyframes</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Procedia synchronizes keyframe data between the node graph and After Effects.
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Viewing: The keyframe icon next to an animatable parameter shows whether it has keyframes (filled = keyframes exist, empty = none).',
+                          'Adding: Click the diamond icon at the current playhead position, or change a keyframed parameter value at a non-keyframe time to auto-add one.',
+                          'Navigating: Use \u25C0 and \u25B6 to jump between keyframes.',
+                          'Removing: Click the diamond icon when the playhead is on an existing keyframe.',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        On startup, Procedia reads all keyframe data from AE and populates the keyframe state automatically.
+                      </p>
+                    </div>
+
+                    {/* Saving & Loading */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Saving & Loading</h2>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Save</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Click the Save button in the top bar. The graph data is written to the AE project. If AE is unavailable, the file downloads as .procedia.json.
+                      </p>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Procedia also auto-saves continuously — any graph change triggers a debounced write to AE (every 300ms). On panel close, unsaved changes are written automatically.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Open</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Click the Open button in the top bar to load a previously saved graph file from disk.
+                      </p>
+
+                      <h3 className='mt-5 text-sm font-semibold text-[#d4d2cc]'>Import AE Project</h3>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        The Import AE Project button reads the entire After Effects project — all compositions, layers, effects, and footage items — and builds a complete node graph from it. This is one-way: it does not modify your AE project.
+                      </p>
+                    </div>
+
+                    {/* Walkthrough Tutorial */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Walkthrough Tutorial</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        On first launch, Procedia shows an interactive step-by-step walkthrough that covers:
+                      </p>
+                      <ol className='mt-2 space-y-1.5 text-sm text-[#B4B2A9] list-decimal pl-5'>
+                        {[
+                          'Welcome',
+                          'Node Palette (left sidebar)',
+                          'The Canvas (zoom, pan, minimap)',
+                          'Comp List',
+                          'Connecting Nodes (wires)',
+                          'Inspector Panel (right sidebar)',
+                          'Reporting a Bug',
+                          'You\'re Ready!',
+                        ].map((item) => (
+                          <li key={item} className='text-sm text-[#B4B2A9]'>{item}</li>
+                        ))}
+                      </ol>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Each step highlights the relevant UI element and shows an explanation card. Use Next to advance or Dismiss to close.
+                      </p>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        To replay the tutorial, go to Settings → General → Replay Tutorial.
+                      </p>
+                    </div>
+
+                    {/* Status Bar */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Status Bar</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        The status bar is in the top-right corner. It displays:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Selection count — e.g., 3 selected (if any)',
+                          'Total nodes — node count in the graph',
+                          'Alive count — nodes that exist in AE',
+                          'Ghost count — nodes not yet created in AE',
+                          'Wire count — total connections',
+                          'Zoom level — current canvas zoom percentage',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Tips Bar */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Tips Bar</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        A floating tip bar at the bottom of the canvas cycles through helpful hints every 20 seconds. Tips include:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Drag nodes from the left panel onto the canvas',
+                          'Connect nodes by dragging from an output port to an input port',
+                          'Right-click a node for quick actions (duplicate, delete, etc.)',
+                          'Press Ctrl+D to duplicate the selected node(s)',
+                          'Scroll to zoom, drag the background to pan around the canvas',
+                          'Double-click a node title to rename it',
+                          'Track Matte rules: Foreground and Matte inputs must be wired to layers in the same composition',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        Click the tip text to advance to the next tip immediately.
+                      </p>
+                    </div>
+
+                    {/* Bug Reporting */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Bug Reporting</h2>
+                      <p className='mt-3 text-sm leading-7 text-[#888780]'>
+                        Click the bug icon in the top bar to open the bug report form. Fill in:
+                      </p>
+                      <ul className='mt-2 space-y-1.5 text-sm text-[#B4B2A9]'>
+                        {[
+                          'Category — Bug, Performance, or Suggestion',
+                          'Severity — Low, Medium, High, or Critical',
+                          'Title — brief summary',
+                          'Description — detailed explanation',
+                        ].map((item) => (
+                          <li key={item} className='flex items-start gap-2'>
+                            <span className='mt-1 text-[#534AB7]'>&bull;</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className='mt-2 text-sm leading-7 text-[#888780]'>
+                        A screenshot of the canvas is captured automatically. Submitting sends the report to the development team.
+                      </p>
+                    </div>
+
+                    {/* Keyboard Shortcuts */}
+                    <div>
+                      <h2 className='text-lg font-semibold text-[#d4d2cc]'>Keyboard Shortcuts</h2>
+                      <div className='mt-4 overflow-hidden rounded-md border border-[#2a2a28]'>
+                        <table className='w-full border-collapse'>
+                          <thead>
+                            <tr className='border-b border-[#2a2a28] bg-[#161614]'>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Shortcut</th>
+                              <th className='px-4 py-2.5 text-left text-[11px] font-medium text-[#888780]'>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { shortcut: 'Ctrl+Z', action: 'Undo' },
+                              { shortcut: 'Ctrl+Shift+Z', action: 'Redo' },
+                              { shortcut: 'Ctrl+D', action: 'Duplicate selected node(s)' },
+                              { shortcut: 'Delete / Backspace', action: 'Delete selected node(s) or wire' },
+                              { shortcut: 'Ctrl+A', action: 'Select all nodes' },
+                              { shortcut: 'Enter', action: 'Confirm rename / Focus first search result' },
+                              { shortcut: 'Escape', action: 'Cancel rename / Close graph search' },
+                              { shortcut: 'Scroll', action: 'Zoom in / out on canvas' },
+                              { shortcut: 'Click + drag (empty canvas)', action: 'Pan / rubber-band select' },
+                            ].map((row) => (
+                              <tr key={row.shortcut} className='border-b border-[#1a1a18]'>
+                                <td className='px-4 py-2'>
+                                  <code className='rounded border border-[#2a2a28] bg-[#161614] px-1.5 py-0.5 text-[11px] text-[#B4B2A9]'>
+                                    {row.shortcut}
+                                  </code>
+                                </td>
+                                <td className='px-4 py-2 text-xs text-[#B4B2A9]'>{row.action}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className='border-t border-[#2a2a28] pt-4'>
+                      <p className='text-xs text-[#5F5E5A]'>
+                        Procedia v0.0.4 — Uppercut Studio
+                      </p>
                     </div>
                   </div>
                 )}
+
 
                 {activeTab === 'nodes' && (
                   <div className="space-y-8">
