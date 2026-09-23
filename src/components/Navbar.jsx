@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { Container } from './Layout'
+import logo from '../assets/procedia-light-logo.svg'
 
 const navLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Features', href: '/#features' },
+  { label: 'Features', href: '/features' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Documentation', href: '/docs' },
 ]
@@ -21,12 +22,7 @@ export function Navbar({ className }) {
         <Container>
           <nav className="flex h-14 items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#534AB7]">
-                <svg className="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                </svg>
-              </div>
-              <span className="text-sm font-bold text-[#d4d2cc]">Procedia</span>
+              <img src={logo} alt="Procedia" className="h-7 w-auto" />
             </Link>
 
             <div className="hidden md:flex md:items-center md:gap-6">
@@ -44,10 +40,9 @@ export function Navbar({ className }) {
             <div className="hidden md:flex md:items-center md:gap-3">
               <Link
                 to="/"
-                className="inline-flex items-center gap-1.5 rounded-md bg-[#534AB7] px-3.5 py-1.5 text-xs font-medium text-white transition-all hover:bg-[#6358C7] hover:shadow-[0_0_15px_rgba(83,74,183,0.3)]"
+                className="inline-flex items-center gap-1.5 rounded-md bg-[#06d6a0] px-3.5 py-1.5 text-xs font-medium text-[#222220] transition-all hover:bg-[#05b98a] hover:shadow-[0_0_15px_rgba(6,214,160,0.3)]"
               >
-                Try Procedia
-                <span className="text-[10px]">&rarr;</span>
+                Get Early Access
               </Link>
             </div>
 
@@ -84,10 +79,9 @@ export function Navbar({ className }) {
                 <hr className="border-[#2a2a28]" />
                 <Link
                   to="/"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#534AB7] px-3.5 py-1.5 text-xs font-medium text-white"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#06d6a0] px-3.5 py-1.5 text-xs font-medium text-[#222220]"
                 >
-                  Try Procedia
-                  <span className="text-[10px]">&rarr;</span>
+                  Get Early Access
                 </Link>
               </div>
             </Container>

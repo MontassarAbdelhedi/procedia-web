@@ -9,7 +9,7 @@ export function CTA() {
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-[#d4d2cc] sm:text-5xl">
             Early Access. Exclusive Benefits.{' '}
-            <span className="bg-gradient-to-r from-[#534AB7] to-[#4cbb6c] bg-clip-text text-transparent">
+            <span className="text-[#06d6a0]">
               New Possibilities.
             </span>
           </h2>
@@ -26,7 +26,7 @@ export function CTA() {
               />
               <button
                 type="submit"
-                className="group inline-flex items-center gap-2 rounded-lg bg-[#534AB7] px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#6358C7] hover:shadow-[0_0_20px_rgba(83,74,183,0.4)]"
+                className="group inline-flex items-center gap-2 rounded-lg bg-[#06d6a0] px-5 py-2.5 text-sm font-semibold text-[#222220] transition-all hover:bg-[#05b98a] hover:shadow-[0_0_20px_rgba(6,214,160,0.4)]"
               >
                 Get Early Access
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

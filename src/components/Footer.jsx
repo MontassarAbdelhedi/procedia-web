@@ -1,4 +1,5 @@
 import { Container } from './Layout'
+import logo from '../assets/procedia-light-logo.svg'
 
 const footerLinks = {
   Product: ['Features', 'Pricing', 'Changelog', 'Documentation'],
@@ -14,18 +15,7 @@ export function Footer() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
               <a href="#" className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#534AB7]">
-                  <svg
-                    className="h-4 w-4 text-white"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                  </svg>
-                </div>
-                <span className="text-sm font-bold text-[#d4d2cc]">Procedia</span>
+                <img src={logo} alt="Procedia" className="h-7 w-auto" />
               </a>
               <p className="mt-3 max-w-xs text-xs leading-5 text-[#888780]">
                 Deliver Interfaces Faster and Seamless with AI

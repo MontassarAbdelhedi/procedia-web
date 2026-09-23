@@ -1,5 +1,5 @@
 import { Check, Star } from 'lucide-react'
-import { Container, Section, SectionHeader } from './Layout'
+import { Container, Section } from './Layout'
 import { NodeCard } from './NodeCard'
 import { cn } from '../lib/utils'
 
@@ -78,11 +78,15 @@ export function PricingCards() {
   return (
     <Section id="pricing">
       <Container>
-        <SectionHeader
-          badge="Pricing"
-          title="Choose the Workflow That Fits Your Creativity"
-          description="Whether you're exploring node-based motion graphics or building production-ready workflows, there's a Procedia plan designed to grow with you."
-        />
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-2xl font-bold tracking-tight text-[#d4d2cc] sm:text-3xl lg:text-4xl">
+            Choose the <span className="text-[#06d6a0]">Ecosystem</span> That Fits Your{' '}
+            <span className="text-[#06d6a0]">Creativity</span>
+          </h2>
+          <p className="mt-4 text-sm leading-7 text-[#888780]">
+            Whether you're exploring node-based motion graphics or building production-ready workflows, there's a Procedia plan designed to grow with you.
+          </p>
+        </div>
 
         <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3" style={{ gridAutoRows: '1fr' }}>
           {plans.map((plan, i) => (
@@ -152,7 +156,7 @@ export function PricingCards() {
                     className={cn(
                       'flex w-full items-center justify-center rounded-md py-2.5 text-xs font-semibold transition-all',
                       plan.highlighted
-                        ? 'bg-[#534AB7] text-white hover:bg-[#6358C7] hover:shadow-[0_0_15px_rgba(83,74,183,0.3)]'
+                       ? 'bg-[#06d6a0] text-[#222220] hover:bg-[#05b98a] hover:shadow-[0_0_15px_rgba(6,214,160,0.3)]'
                         : 'border border-[#2a2a28] bg-[#161614] text-[#d4d2cc] hover:border-[#3a3a38]'
                     )}
                   >

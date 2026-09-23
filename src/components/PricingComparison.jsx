@@ -6,52 +6,71 @@ const comparisonCategories = [
   {
     name: 'Core Editor',
     features: [
-      { name: 'Node-based graph editor', starter: true, pro: true, team: true },
-      { name: 'Drag-and-drop interface', starter: true, pro: true, team: true },
-      { name: 'Real-time preview', starter: true, pro: true, team: true },
-      { name: 'Undo / redo history', starter: '30 steps', pro: 'Unlimited', team: 'Unlimited' },
-      { name: 'Custom node creation', starter: false, pro: true, team: true },
+      { name: 'Node-based Graph Editor',              starter: true, pro: true, team: true },
+      { name: 'Drag-and-drop Interface',              starter: true, pro: true, team: true },
+      { name: 'Unlimited Graphs',                     starter: true, pro: true, team: true },
+      { name: 'Auto Layout',                          starter: false, pro: true, team: true },
+      { name: 'Collapse / Expand',                    starter: true, pro: true, team: true },
+      { name: 'Import AEP',                           starter: false, pro: true, team: true },
+      { name: 'Save Graph',                           starter: true, pro: true, team: true },
+      { name: 'Import Graph',                         starter: true, pro: true, team: true },
     ],
   },
   {
     name: 'Node Library',
     features: [
-      { name: 'Essential nodes', starter: true, pro: true, team: true },
-      { name: 'Advanced transform nodes', starter: false, pro: true, team: true },
-      { name: 'Procedural instancing', starter: false, pro: true, team: true },
-      { name: 'Fields & forces system', starter: false, pro: true, team: true },
-      { name: 'Data-driven nodes', starter: false, pro: true, team: true },
-      { name: 'Custom scripting nodes', starter: false, pro: false, team: true },
+      { name: 'Essential Nodes',                      starter: true, pro: true, team: true },
+      { name: 'Native AE Effects',                    starter: true, pro: true, team: true },
+      { name: 'Merge & Multimerge',                   starter: true, pro: true, team: true },
+      { name: 'Advanced Transform Nodes',             starter: false, pro: true, team: true },
+      { name: 'Procedural Instancing',                starter: false, pro: true, team: true },
+      { name: 'Fields & Forces System',               starter: false, pro: true, team: true },
+      { name: 'Expression Nodes',                     starter: false, pro: true, team: true },
+      { name: '2D/3D Grid Layout',                    starter: true, pro: true, team: true },
+      { name: 'Auto Spacing',                        starter: false, pro: true, team: true },
+    ],
+  },
+  {
+    name: 'Data-driven nodes',
+    features: [
+      { name: 'Number',                               starter: true, pro: true, team: true },
+      { name: 'Angle',                                starter: true, pro: true, team: true },
+      { name: 'Color',                                starter: true, pro: true, team: true },
+      { name: 'JSON',                                 starter: false, pro: true, team: true },
+      { name: 'CSV',                                  starter: false, pro: true, team: true },
+      { name: 'Boolean',                              starter: false, pro: true, team: true },
     ],
   },
   {
     name: 'Workflow',
     features: [
-      { name: 'Saved workflow presets', starter: '3 presets', pro: 'Unlimited', team: 'Unlimited' },
-      { name: 'Branching & merging', starter: false, pro: true, team: true },
-      { name: 'Template library', starter: false, pro: true, team: true },
-      { name: 'Shared team libraries', starter: false, pro: false, team: true },
-      { name: 'Version control', starter: false, pro: false, team: true },
+      { name: 'Parenting',                            starter: true, pro: true, team: true },
+      { name: 'Saved Workflow Presets',               starter: false, pro: true, team: true },
+      { name: 'Branching & Merging',                  starter: false, pro: true, team: true },
+      { name: 'Template Library',                     starter: false, pro: true, team: true },
+      { name: 'Shared Team Presets',                  starter: false, pro: true, team: true },
+      { name: 'Version Control',                      starter: false, pro: true, team: true },
     ],
   },
   {
-    name: 'Collaboration',
+    name: 'Node Toolkit',
     features: [
-      { name: 'Community access', starter: true, pro: true, team: true },
-      { name: 'Export / import workflows', starter: true, pro: true, team: true },
-      { name: 'Team workspaces', starter: false, pro: false, team: true },
-      { name: 'Role-based permissions', starter: false, pro: false, team: true },
-      { name: 'Centralized billing', starter: false, pro: false, team: true },
+      { name: 'Duplicate Node',                       starter: true, pro: true, team: true },
+      { name: 'Deep Duplicate Comp Node',             starter: false, pro: true, team: true },
+      { name: 'Clone Node',                           starter: false, pro: true, team: true },
+      { name: 'Custom Color',                         starter: true, pro: true, team: true },
+      { name: 'Disable Node',                         starter: false, pro: true, team: true },
+      { name: 'Swap Nodes',                           starter: false, pro: true, team: true },
     ],
   },
   {
     name: 'Support',
     features: [
-      { name: 'Starter tutorials', starter: true, pro: true, team: true },
-      { name: 'Priority updates', starter: false, pro: true, team: true },
-      { name: 'Dedicated account manager', starter: false, pro: false, team: true },
-      { name: 'Custom onboarding', starter: false, pro: false, team: true },
-      { name: 'SLA guarantee', starter: false, pro: false, team: true },
+      { name: 'Starter tutorials',                    starter: true, pro: true, team: true },
+      { name: 'Priority updates',                     starter: false, pro: true, team: true },
+      { name: 'Dedicated account manager',            starter: false, pro: true, team: true },
+      { name: 'Custom onboarding',                    starter: false, pro: true, team: true },
+      { name: 'SLA guarantee',                        starter: false, pro: true, team: true },
     ],
   },
 ]
@@ -122,7 +141,7 @@ export function PricingComparison() {
                     <td className="px-4 py-5 text-center">
                       <a
                         href="#"
-                        className="inline-flex items-center justify-center rounded-md bg-[#534AB7] px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-[#6358C7] hover:shadow-[0_0_15px_rgba(83,74,183,0.3)]"
+                        className="inline-flex items-center justify-center rounded-md bg-[#06d6a0] px-4 py-2 text-xs font-semibold text-[#222220] transition-all hover:bg-[#05b98a] hover:shadow-[0_0_15px_rgba(6,214,160,0.3)]"
                       >
                         Upgrade to Pro
                       </a>

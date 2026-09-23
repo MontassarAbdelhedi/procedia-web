@@ -51,7 +51,7 @@ export function Testimonials() {
           <div className="max-w-xs lg:sticky lg:top-32">
             <h2 className="text-2xl font-bold tracking-tight text-[#d4d2cc] sm:text-3xl">
               Honest review from{' '}
-              <span className="bg-gradient-to-r from-[#534AB7] to-[#4cbb6c] bg-clip-text text-transparent">
+              <span className="text-[#06d6a0]">
                 dev &amp; designer
               </span>
             </h2>

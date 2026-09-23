@@ -12,6 +12,7 @@ import {
 import { NodeCanvas } from './components/NodeCanvas'
 import { PricingPage } from './pages/PricingPage'
 import { DocumentationPage } from './pages/DocumentationPage'
+import { FeaturesPage } from './pages/FeaturesPage'
 
 function HomePage() {
   return (
@@ -21,10 +22,10 @@ function HomePage() {
         <Navbar />
         <main>
           <Hero />
-          <Features />
           <TechStack />
-          <PricingCards />
+          <Features />
           <FAQ />
+          <PricingCards />
           <CTA />
         </main>
         <Footer />
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/docs" element={<DocumentationPage />} />
+        <Route path="/features" element={<FeaturesPage />} />
       </Routes>
     </BrowserRouter>
   )

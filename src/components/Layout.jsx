@@ -27,7 +27,7 @@ export function SectionHeader({ badge, title, titleGradient, description, classN
       <h2 className="text-2xl font-bold tracking-tight text-[#d4d2cc] sm:text-3xl lg:text-4xl">
         {title}{' '}
         {titleGradient && (
-          <span className="bg-gradient-to-r from-[#534AB7] to-[#4cbb6c] bg-clip-text text-transparent">
+          <span className="text-[#06d6a0]">
             {titleGradient}
           </span>
         )}

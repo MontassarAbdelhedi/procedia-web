@@ -54,7 +54,6 @@ export function Features() {
     <Section id="features">
       <Container>
         <SectionHeader
-          badge="Why Procedia"
           title="Powerful Tools."
           titleGradient="Cleaner Workflows."
           description="Discover a complete toolkit that transforms Adobe After Effects into a modern, node-based environment for motion designers and compositors."

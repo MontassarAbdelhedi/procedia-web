@@ -129,7 +129,7 @@ export function FAQ() {
   return (
     <Section id="community">
       <Container>
-        <SectionHeader badge="FAQ" title="Frequently Asked Question" />
+        <SectionHeader title="Frequently Asked Question" />
 
         <div className="mx-auto mt-12 max-w-4xl">
           <div className="flex flex-wrap justify-center gap-2">
