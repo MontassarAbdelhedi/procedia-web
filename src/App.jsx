@@ -4,6 +4,7 @@ import {
   Hero,
   Features,
   TechStack,
+  HowTo,
   PricingCards,
   FAQ,
   CTA,
@@ -23,6 +24,7 @@ function HomePage() {
         <main>
           <Hero />
           <TechStack />
+          <HowTo />
           <Features />
           <FAQ />
           <PricingCards />

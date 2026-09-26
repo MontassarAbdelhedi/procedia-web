@@ -10,8 +10,11 @@ export function TechStack() {
           description="Procedia turns motion design into a visual system of connected ideas, giving you the freedom to experiment, iterate, and create without technical limitations."
         />
 
-        {/* TODO: Animated content goes here */}
-        <div className="mx-auto mt-16 h-[400px] max-w-5xl rounded-xl border border-dashed border-[#2a2a28] bg-[#1a1a18]/30" />
+        <img
+          src="/hero.png"
+          alt="Procedia node editor with connected motion-design nodes"
+          className="mx-auto mt-16 block h-auto w-full max-w-5xl rounded-xl border border-[#2a2a28]"
+        />
       </Container>
     </Section>
   )
