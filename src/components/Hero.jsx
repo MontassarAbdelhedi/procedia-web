@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Container } from './Layout'
+import { Link } from 'react-router-dom'
 
 export function Hero() {
   return (
@@ -24,9 +25,9 @@ export function Hero() {
 
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <a href="#" className="group inline-flex items-center justify-center gap-2 rounded-lg bg-[#06d6a0] px-5 py-2.5 text-sm font-semibold text-[#222220] transition-all hover:bg-[#05b98a] hover:shadow-[0_0_20px_rgba(6,214,160,0.4)]">
+            <Link to="/early-access" className="group inline-flex items-center justify-center gap-2 rounded-lg bg-[#06d6a0] px-5 py-2.5 text-sm font-semibold text-[#222220] transition-all hover:bg-[#05b98a] hover:shadow-[0_0_20px_rgba(6,214,160,0.4)]">
               Get Early Access <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
+            </Link>
             <a href="#" className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#2a2a28] bg-[#1a1a18] px-5 py-2.5 text-sm font-semibold text-[#d4d2cc] transition-all hover:border-[#3a3a38] hover:bg-[#222220]">
               Watch Demo
             </a>

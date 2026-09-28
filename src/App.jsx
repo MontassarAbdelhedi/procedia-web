@@ -14,6 +14,7 @@ import { NodeCanvas } from './components/NodeCanvas'
 import { PricingPage } from './pages/PricingPage'
 import { DocumentationPage } from './pages/DocumentationPage'
 import { FeaturesPage } from './pages/FeaturesPage'
+import { EarlyAccessPage } from './pages/EarlyAccessPage'
 
 function HomePage() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/early-access" element={<EarlyAccessPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/docs" element={<DocumentationPage />} />

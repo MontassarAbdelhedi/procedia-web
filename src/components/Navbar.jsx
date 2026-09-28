@@ -39,7 +39,7 @@ export function Navbar({ className }) {
 
             <div className="hidden md:flex md:items-center md:gap-3">
               <Link
-                to="/"
+                to="/early-access"
                 className="inline-flex items-center gap-1.5 rounded-md bg-[#06d6a0] px-3.5 py-1.5 text-xs font-medium text-[#222220] transition-all hover:bg-[#05b98a] hover:shadow-[0_0_15px_rgba(6,214,160,0.3)]"
               >
                 Get Early Access
@@ -47,6 +47,8 @@ export function Navbar({ className }) {
             </div>
 
             <button
+              aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'}
+              aria-expanded={mobileOpen}
               className="inline-flex items-center justify-center rounded-md p-1.5 text-[#888780] hover:text-[#d4d2cc] md:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
@@ -78,7 +80,8 @@ export function Navbar({ className }) {
                 ))}
                 <hr className="border-[#2a2a28]" />
                 <Link
-                  to="/"
+                  to="/early-access"
+                  onClick={() => setMobileOpen(false)}
                   className="inline-flex items-center justify-center gap-1.5 rounded-md bg-[#06d6a0] px-3.5 py-1.5 text-xs font-medium text-[#222220]"
                 >
                   Get Early Access

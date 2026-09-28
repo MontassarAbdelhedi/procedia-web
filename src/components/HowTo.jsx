@@ -10,7 +10,7 @@ const tutorials = [
   { title: 'Multiwiring', description: "Connect several nodes at once to build your composition.", gif: '/how-to/multiwire.gif?v=2' },
   { title: 'Parenting', description: "Link a child to a parent so it follows the parent's transforms.", gif: '/how-to/parenting.gif?v=2' },
   { title: 'Isolate Compositions', description: "Focus on one composition and the nodes connected to it. Drop a new node for automatic wiring.", gif: '/how-to/isolate-comp.gif?v=2' },
-  { title: 'Drop Node Midwire', description: "Drop a node onto an existing wire to insert it into the flow.", gif: null },
+  { title: 'Drop Node Midwire', description: "Drop a node onto an existing wire to insert it into the flow.", gif: '/how-to/midwire.gif' },
 ]
 
 export function HowTo() {
